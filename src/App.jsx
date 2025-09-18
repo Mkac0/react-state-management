@@ -3,7 +3,7 @@ import './App.css'
 
 const App = () => {
   const [team, setTeam] = useState([]);
-  const [money, setMoney] = useState([]);
+  const [money, setMoney] = useState(100);
   const [teamStrength, setTeamStrength] = useState([]);
   const [teamAgility, setTeamAgility] = useState([]);
 
@@ -97,15 +97,21 @@ const App = () => {
     }
 
     setTeam(prev => [...prev, fighter]);
-    setZombieFighters(prev => prev.filter(fighter => fighter.id !== fighter.id));
+    setZombieFighters(prev => prev.filter(f => f.id !== fighter.id));
     setMoney(prev => prev - fighter.price);
+  }
+
+  const handleRemoveFighter = (fighter) => {
+    setTeam(prev => prev.filter(member => member.id !== fighter.id));
+    setZombieFighters(prev => [...prev, fighter]);
+    setMoney(prev => prev + fighter.price);
   }
 
   return (
     <>
       <h1>Zombie Fighters</h1>
 
-      <p className='money'>Money: ${money}</p>
+      <p className='money'>Money: {money}</p>
       <p className='teamStrength'>Team Strength: {teamStrength}</p>
       <p className='teamAgility'>Team Agility: {teamAgility}</p>
 
